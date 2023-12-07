@@ -25,12 +25,11 @@ class _ClientProfileScreenState extends State<ClientProfileScreen> {
 
   @override
   Widget build(BuildContext context) => BlocProvider<ClientCubit>(
-        create: (BuildContext context) => ClientCubit(),
+        create: (BuildContext context) => ClientCubit()..clientGetData(),
         child: BlocConsumer<ClientCubit, ClientStates>(
           listener: (BuildContext context, ClientStates state) {},
           builder: (BuildContext context, ClientStates state) {
             final ClientCubit cubit = ClientCubit.get(context);
-
             return ConditionalBuilder(
               condition: state is! ClientGetDataLoadingState,
               builder: (context) => Directionality(
@@ -107,173 +106,29 @@ class _ClientProfileScreenState extends State<ClientProfileScreen> {
                                 ),
                               ],
                             ),
-                            const Align(
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                'الاسم بالكامل',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                            TextFormField(
+                            textAndTextField(
                               controller: nameController,
-                              validator: (dynamic value) {
-                                if (value.toString().isEmpty) {
-                                  return 'من فضلك اكتب اسمك';
-                                }
-                                return null;
-                              },
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                fillColor: const Color(0xffFFFFFF),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black12,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    8,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffFF8B00),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
+                              text1: 'الاسم بالكامل',
+                              validateText: 'من فضلك اكتب الاسم',
+                              hintText: '${cubit.clientModel!.name}',
                             ),
-                            const SizedBox(
-                              height: 5,
+                            textAndTextField(
+                              controller: nameController,
+                              text1: 'العمر',
+                              validateText: 'من فضلك اكتب العمر',
+                              hintText: '${cubit.clientModel!.age}',
                             ),
-                            const Align(
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                'العمر',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15,
-                                ),
-                              ),
+                            textAndTextField(
+                              controller: nameController,
+                              text1: 'رقم الهاتف',
+                              validateText: 'من فضلك اكتب رقم الهاتف',
+                              hintText: '${cubit.clientModel!.number}',
                             ),
-                            TextFormField(
-                              controller: ageController,
-                              validator: (dynamic value) {
-                                if (value.toString().isEmpty) {
-                                  return 'من فضلك اكتب اسمك';
-                                }
-                                return null;
-                              },
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                fillColor: const Color(0xffFFFFFF),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black12,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    8,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffFF8B00),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const Align(
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                'رقم الهاتف',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              controller: phoneController,
-                              validator: (dynamic value) {
-                                if (value.toString().isEmpty) {
-                                  return 'رقم الهاتف';
-                                }
-                                return null;
-                              },
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                fillColor: const Color(0xffFFFFFF),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black12,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    8,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffFF8B00),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const Align(
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                'البريد الالكترونى',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              controller: emailController,
-                              validator: (dynamic value) {
-                                if (value.toString().isEmpty) {
-                                  return 'من فضلك اكتب اسمك';
-                                }
-                                return null;
-                              },
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                fillColor: const Color(0xffFFFFFF),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black12,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    8,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffFF8B00),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 40,
+                            textAndTextField(
+                              controller: nameController,
+                              text1: 'البريد الالكترونى',
+                              validateText: 'من فضلك اكتب البريد الالكترونى',
+                              hintText: '${cubit.clientModel!.email}',
                             ),
                             if (iconEdit == false)
                               textButton(
@@ -290,86 +145,26 @@ class _ClientProfileScreenState extends State<ClientProfileScreen> {
                   ),
                 ),
               ),
-              fallback: (context) => Center(child: CircularProgressIndicator()),
+              fallback: (context) => const Center(child: CircularProgressIndicator()),
             );
           },
         ),
       );
 }
 
-Widget columnBody({
-  required Function() onPressEdit,
-  required Function() onPressCamera,
-  required TextEditingController nameController,
-  required TextEditingController ageController,
-  required TextEditingController phoneController,
-  required TextEditingController emailController,
-  bool iconEdit = false,
+Widget textAndTextField({
+  required TextEditingController controller,
+  required String text1,
+  required String validateText,
+  required String hintText,
 }) =>
     Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            const SizedBox(
-              width: 60,
-            ),
-            const Text(
-              'ملفى الشخصى',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                color: Color(0xff000000),
-              ),
-            ),
-            IconButton(
-              onPressed: onPressEdit,
-              icon: iconEdit == true
-                  ? const Icon(
-                      Icons.edit,
-                      color: Color(0xff707B81),
-                    )
-                  : const Icon(
-                      Icons.edit,
-                      color: Color(0xffFF7A00),
-                    ),
-            ),
-          ],
-        ),
-        Stack(
-          children: <Widget>[
-            const SizedBox(
-              height: 110,
-              child: CircleAvatar(
-                radius: 45,
-                backgroundImage: AssetImage(
-                  'assets/images/aa.jpg',
-                ),
-              ),
-            ),
-            Positioned(
-              top: 80,
-              left: 33,
-              child: CircleAvatar(
-                radius: 15,
-                backgroundColor: const Color(0xffFF7A00),
-                child: IconButton(
-                  onPressed: onPressCamera,
-                  icon: const Icon(
-                    Icons.camera_alt_outlined,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const Align(
+      children: [
+        Align(
           alignment: Alignment.topRight,
           child: Text(
-            'الاسم بالكامل',
-            style: TextStyle(
+            text1,
+            style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w500,
               fontSize: 15,
@@ -377,15 +172,16 @@ Widget columnBody({
           ),
         ),
         TextFormField(
-          controller: nameController,
+          controller: controller,
           validator: (dynamic value) {
             if (value.toString().isEmpty) {
-              return 'من فضلك اكتب اسمك';
+              return 'من فضلك اكتب $validateText';
             }
             return null;
           },
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
+            hintText: hintText,
             fillColor: const Color(0xffFFFFFF),
             filled: true,
             enabledBorder: OutlineInputBorder(
@@ -405,141 +201,7 @@ Widget columnBody({
           ),
         ),
         const SizedBox(
-          height: 5,
+          height: 0,
         ),
-        const Align(
-          alignment: Alignment.topRight,
-          child: Text(
-            'العمر',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-            ),
-          ),
-        ),
-        TextFormField(
-          controller: ageController,
-          validator: (dynamic value) {
-            if (value.toString().isEmpty) {
-              return 'من فضلك اكتب اسمك';
-            }
-            return null;
-          },
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            fillColor: const Color(0xffFFFFFF),
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Colors.black12,
-              ),
-              borderRadius: BorderRadius.circular(
-                8,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Color(0xffFF8B00),
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        const Align(
-          alignment: Alignment.topRight,
-          child: Text(
-            'رقم الهاتف',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-            ),
-          ),
-        ),
-        TextFormField(
-          controller: phoneController,
-          validator: (dynamic value) {
-            if (value.toString().isEmpty) {
-              return 'رقم الهاتف';
-            }
-            return null;
-          },
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            fillColor: const Color(0xffFFFFFF),
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Colors.black12,
-              ),
-              borderRadius: BorderRadius.circular(
-                8,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Color(0xffFF8B00),
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        const Align(
-          alignment: Alignment.topRight,
-          child: Text(
-            'البريد الالكترونى',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-            ),
-          ),
-        ),
-        TextFormField(
-          controller: emailController,
-          validator: (dynamic value) {
-            if (value.toString().isEmpty) {
-              return 'من فضلك اكتب اسمك';
-            }
-            return null;
-          },
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            fillColor: const Color(0xffFFFFFF),
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Colors.black12,
-              ),
-              borderRadius: BorderRadius.circular(
-                8,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Color(0xffFF8B00),
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        if (iconEdit == false)
-          textButton(
-            text: 'تعديل',
-            onPressed: () {},
-            state: true,
-          )
-        else
-          const Text(''),
       ],
     );

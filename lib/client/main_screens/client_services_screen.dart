@@ -86,7 +86,7 @@ Widget listView(ClientCubit cubit) => ListView.separated(
           children: <Widget>[
             const Image(
               image: AssetImage(
-                'assets/images/Rectangle 34624115.png',
+                'assets/images/boarding_photo1.png',
               ),
               height: 90,
               width: 111,
@@ -109,43 +109,49 @@ Widget listView(ClientCubit cubit) => ListView.separated(
                     height: 10,
                   ),
                   Text(
-                    '${cubit.clientServicesModel!.services![index].price} ج.م/ساعه',
+                    '${cubit.clientServicesModel!.services![index].description}',
                     style: const TextStyle(
-                      fontSize: 10,
+                      fontSize: 7,
                       fontWeight: FontWeight.w400,
                       color: Color(0xff393F42),
                     ),
-                  ),
-                  Row(
-                    children: const <Widget>[
-                      Icon(
-                        Icons.star,
-                        color: Color(0xffFF8B00),
-                        size: 11,
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Text(
-                        '4.5',
-                        style: TextStyle(
-                          fontSize: 8,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xff393F42),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
             ),
             const Spacer(),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.favorite_border,
-                color: Color(0xff939393),
-              ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  '${cubit.clientServicesModel!.services![index].price} ج.م/ساعه',
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xff393F42),
+                  ),
+                ),
+                Row(
+                  children: const <Widget>[
+                    Icon(
+                      Icons.star,
+                      color: Color(0xffFF8B00),
+                      size: 11,
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      '4.5',
+                      style: TextStyle(
+                        fontSize: 8,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff393F42),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),

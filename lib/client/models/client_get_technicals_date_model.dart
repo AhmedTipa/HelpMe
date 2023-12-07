@@ -1,6 +1,21 @@
-class TechnicalServicesModel {
-  List<Services>? services;
-  Ratings? ratings;
+class ClientGetTechnicalsDataModel {
+  bool? success;
+  List<Data>? data;
+
+  ClientGetTechnicalsDataModel({this.success, this.data});
+
+  ClientGetTechnicalsDataModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(Data.fromJson(v));
+      });
+    }
+  }
+}
+
+class Data {
   String? sId;
   String? job;
   String? experience;
@@ -9,16 +24,11 @@ class TechnicalServicesModel {
   String? rangeJob;
   String? jobKind;
   List<void>? certificateImg;
-  String? technicalId;
-  String? createdAt;
-  String? updatedAt;
-  int? iV;
-  bool? status;
+  Ratings? ratings;
+  User? user;
 
-  TechnicalServicesModel(
-      {this.services,
-      this.ratings,
-      this.sId,
+  Data(
+      {this.sId,
       this.job,
       this.experience,
       this.gender,
@@ -26,21 +36,10 @@ class TechnicalServicesModel {
       this.rangeJob,
       this.jobKind,
       this.certificateImg,
-      this.technicalId,
-      this.createdAt,
-      this.updatedAt,
-      this.iV,
-      this.status});
+      this.ratings,
+      this.user});
 
-  TechnicalServicesModel.fromJson(Map<String, dynamic> json) {
-    if (json['services'] != null) {
-      services = <Services>[];
-      json['services'].forEach((v) {
-        services!.add(Services.fromJson(v));
-      });
-    }
-    ratings =
-        json['ratings'] != null ? Ratings.fromJson(json['ratings']) : null;
+  Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     job = json['job'];
     experience = json['experience'];
@@ -54,47 +53,16 @@ class TechnicalServicesModel {
         certificateImg!.add(v.fromJson(v));
       });
     }
-    technicalId = json['technicalId'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    iV = json['__v'];
-    status = json['status'];
-  }
-}
-
-class Services {
-  Ratings? ratings;
-  String? sId;
-  String? title;
-  String? description;
-  TechnicalId? technicalId;
-  int? price;
-
-  Services(
-      {this.ratings,
-      this.sId,
-      this.title,
-      this.description,
-      this.technicalId,
-      this.price});
-
-  Services.fromJson(Map<String, dynamic> json) {
     ratings =
         json['ratings'] != null ? Ratings.fromJson(json['ratings']) : null;
-    sId = json['_id'];
-    title = json['title'];
-    description = json['description'];
-    technicalId = json['technicalId'] != null
-        ? TechnicalId.fromJson(json['technicalId'])
-        : null;
-    price = json['price'];
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 }
 
 class Ratings {
   int? avgRating;
   int? count;
-  List<void>? rateByUser;
+  List<RateByUser>? rateByUser;
 
   Ratings({this.avgRating, this.count, this.rateByUser});
 
@@ -102,15 +70,31 @@ class Ratings {
     avgRating = json['avgRating'];
     count = json['count'];
     if (json['rateByUser'] != null) {
-      rateByUser = <Null>[];
+      rateByUser = <RateByUser>[];
       json['rateByUser'].forEach((v) {
-        rateByUser!.add(v.fromJson(v));
+        rateByUser!.add(RateByUser.fromJson(v));
       });
     }
   }
 }
 
-class TechnicalId {
+class RateByUser {
+  String? userId;
+  int? stars;
+  String? sId;
+
+  RateByUser({this.userId, this.stars, this.sId});
+
+  RateByUser.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    stars = json['stars'];
+    sId = json['_id'];
+  }
+
+
+}
+
+class User {
   String? sId;
   String? name;
   String? email;
@@ -121,9 +105,10 @@ class TechnicalId {
   String? number;
   String? role;
   List<void>? imgPath;
-  int? iV;
+  String? uniqueResetPassStr;
+  List<Chats>? chats;
 
-  TechnicalId(
+  User(
       {this.sId,
       this.name,
       this.email,
@@ -134,9 +119,10 @@ class TechnicalId {
       this.number,
       this.role,
       this.imgPath,
-      this.iV});
+      this.uniqueResetPassStr,
+      this.chats});
 
-  TechnicalId.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
     email = json['email'];
@@ -152,6 +138,30 @@ class TechnicalId {
         imgPath!.add(v.fromJson(v));
       });
     }
-    iV = json['__v'];
+    uniqueResetPassStr = json['uniqueResetPassStr'];
+    if (json['chats'] != null) {
+      chats = <Chats>[];
+      json['chats'].forEach((v) {
+        chats!.add(Chats.fromJson(v));
+      });
+    }
+  }
+}
+
+class Chats {
+  String? sender;
+  String? receiver;
+  String? msg;
+  String? sId;
+  String? createdAt;
+
+  Chats({this.sender, this.receiver, this.msg, this.sId, this.createdAt});
+
+  Chats.fromJson(Map<String, dynamic> json) {
+    sender = json['sender'];
+    receiver = json['receiver'];
+    msg = json['msg'];
+    sId = json['_id'];
+    createdAt = json['createdAt'];
   }
 }

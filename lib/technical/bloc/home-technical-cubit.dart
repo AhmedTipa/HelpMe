@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:helpme/app_constants/cache_helper.dart';
+import 'package:helpme/app_constants/constance.dart';
 import 'package:helpme/app_constants/help_dio.dart';
 import 'package:helpme/registration/models/login_model.dart';
 import 'package:helpme/technical/bloc/home_technical_states.dart';
+import 'package:helpme/technical/models/technical_add_services_model.dart';
+import 'package:helpme/technical/models/technical_complete_model.dart';
 import 'package:helpme/technical/models/technical_services_model.dart';
-import 'package:helpme/technical/models/technical_model.dart';
 import 'package:helpme/technical/screens/technical_add_service_screen.dart';
 import 'package:helpme/technical/screens/technical_home_screen.dart';
 import 'package:helpme/technical/screens/technical_profile_screen.dart';
@@ -20,9 +22,9 @@ class TechnicalCubit extends Cubit<TechnicalStates> {
     TechnicalSettingScreen(),
     TechnicalProfileScreen(),
     TechnicalAddServiceScreen(),
-    TechnicalHomeScreen(),
+
   ];
-  int activeIndex = 3;
+  int activeIndex = 2;
 
   void changeBtmNavBar(int index) {
     activeIndex = index;
@@ -54,7 +56,8 @@ class TechnicalCubit extends Cubit<TechnicalStates> {
       if (response.statusCode == 200) {
         print(response.data);
         technicalModel = LoginModel.fromJson(response.data!);
-        print(technicalModel!.name);
+        print(technicalModel!.id);
+        technicalId = technicalModel!.id!.toString();
         emit(TechnicalGetDataSuccessState(technicalModel!));
       }
     } on DioError catch (error) {
@@ -63,7 +66,7 @@ class TechnicalCubit extends Cubit<TechnicalStates> {
     }
   }
 
-  TechnicalModel? technicalCompleteModel;
+  TechnicalCompleteModel? technicalCompleteModel;
 
   Future<void> technicalGetCompleteData() async {
     emit(TechnicalGetDataLoadingState());
@@ -73,7 +76,8 @@ class TechnicalCubit extends Cubit<TechnicalStates> {
         token: getData(key: 'token'),
       );
       if (response.statusCode == 200) {
-        technicalCompleteModel = TechnicalModel.fromJson(response.data!);
+        technicalCompleteModel =
+            TechnicalCompleteModel.fromJson(response.data!);
         print(technicalModel!.name);
         emit(TechnicalGetCompleteDataSuccessState());
       }
@@ -83,7 +87,7 @@ class TechnicalCubit extends Cubit<TechnicalStates> {
     }
   }
 
-  TechnicalServicesModel? servicesModel;
+  TechnicalAddServicesModel? technicalAddServicesModel;
 
   Future<void> technicalAddServices({
     required String title,
@@ -105,12 +109,37 @@ class TechnicalCubit extends Cubit<TechnicalStates> {
       );
       if (response.statusCode == 201) {
         print(response.data);
-        servicesModel = TechnicalServicesModel.fromJson(response.data!);
-        print(servicesModel!.service!.title);
+        technicalAddServicesModel =
+            TechnicalAddServicesModel.fromJson(response.data!);
         emit(TechnicalAddServicesSuccessState());
       }
     } on DioError catch (error) {
       emit(TechnicalAddServicesErrorState(error.response.toString()));
+      print(error.response);
+    }
+  }
+
+  TechnicalServicesModel? technicalServicesModel;
+
+  Future<void> technicalGetServicesData({
+    required String technicalId,
+  }) async {
+    emit(TechnicalGetServicesDataLoadingState());
+    try {
+      final Response<dynamic> response = await helpPostData(
+        url: '/api/services/get-services-by-user',
+        token: getData(key: 'token'),
+        data: {
+          'technicalId': technicalId,
+        },
+      );
+      if (response.statusCode == 200) {
+        technicalServicesModel =
+            TechnicalServicesModel.fromJson(response.data!);
+        emit(TechnicalGetServicesDataSuccessState());
+      }
+    } on DioError catch (error) {
+      emit(TechnicalGetServicesDataErrorState(error.response.toString()));
       print(error.response);
     }
   }

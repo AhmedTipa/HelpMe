@@ -8,8 +8,11 @@ import 'package:helpme/client/bloc/home_client_states.dart';
 import 'package:helpme/client/main_screens/client_profile_screen.dart';
 import 'package:helpme/client/main_screens/client_favorite_screen.dart';
 import 'package:helpme/client/main_screens/client_home_screen.dart';
+import 'package:helpme/client/main_screens/client_services_screen.dart';
 import 'package:helpme/client/main_screens/client_setting_screen.dart';
+import 'package:helpme/client/models/client_get_technicals_date_model.dart';
 import 'package:helpme/client/models/client_services_model.dart';
+import 'package:helpme/client/screens/sections/plumbing_screen.dart';
 import 'package:helpme/registration/models/login_model.dart';
 
 class ClientCubit extends Cubit<ClientStates> {
@@ -19,7 +22,7 @@ class ClientCubit extends Cubit<ClientStates> {
 
   List<Widget> screens = <Widget>[
     ClientHomeScreen(),
-    const ClientFavoriteScreen(),
+    const ClientServicesScreen(),
     const ClientProfileScreen(),
     const ClientSettingScreen(),
   ];
@@ -37,7 +40,7 @@ class ClientCubit extends Cubit<ClientStates> {
     try {
       final response = await helpGetData(url: '/api/users/signout');
       if (response.statusCode == 200) {
-        print('success');
+
         emit(ClientSignOutSuccessState());
       }
     } on DioError catch (error) {
@@ -57,14 +60,11 @@ class ClientCubit extends Cubit<ClientStates> {
         token: getData(key: 'token'),
       );
       if (response.statusCode == 200) {
-        print(response.data);
         clientModel = LoginModel.fromJson(response.data);
-        print(clientModel!.name);
         emit(ClientGetDataSuccessState(clientModel!));
       }
     } on DioError catch (error) {
       emit(ClientGetDataErrorState(error.response.toString()));
-      print(error.response);
     }
   }
 
@@ -88,7 +88,26 @@ class ClientCubit extends Cubit<ClientStates> {
       }
     } on DioError catch (error) {
       emit(ClientGetServicesDataErrorState(error.response.toString()));
-      print(error.response);
+    }
+  }
+int index=0;
+  ClientGetTechnicalsDataModel? clientGetTechnicalsDataModel;
+
+  Future<void> clientGetTechnicalsData() async {
+    emit(ClientGetTechnicalsDataLoadingState());
+    try {
+      final Response<dynamic> response = await helpGetData(
+          url: '/api/technical/get-technicals',
+          token: getData(key: 'token'),
+          );
+      if (response.statusCode == 200) {
+        clientGetTechnicalsDataModel =
+            ClientGetTechnicalsDataModel.fromJson(response.data);
+        emit(
+            ClientGetTechnicalsDataSuccessState(clientGetTechnicalsDataModel!));
+      }
+    } on DioError catch (error) {
+      emit(ClientGetServicesDataErrorState(error.response.toString()));
     }
   }
 }

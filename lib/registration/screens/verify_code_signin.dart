@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
@@ -188,49 +189,53 @@ class EnterVerifyCodeSignInScreen extends StatelessWidget {
                               hintText: ' ادخل كود التحقق',
                               prefixIcon: Icons.code_sharp,
                             ),
-                            Center(
-                              child: TextButton(
-                                onPressed: () async {
-                                  await cubit
-                                      .registrationResendOtpSignUp()
-                                      .whenComplete(() {
-                                    if (state is
-                                    RegistrationResendOtpSignUpSuccessState) {
-                                      FlutterToastr.show(
-                                        'تم اعادة ارسال الكود',
-                                        context,
-                                        position: FlutterToastr.bottom,
-                                        backgroundColor: Colors.green,
-                                        duration: FlutterToastr.lengthLong,
-                                      );
-                                    } else {
+                            ConditionalBuilder(
+                              condition: state is RegistrationVerifyCodeSignUpLoadingState,
+                              builder: (context)=>Center(
+                                child: TextButton(
+                                  onPressed: () async {
+                                    await cubit
+                                        .registrationResendOtpSignUp()
+                                        .whenComplete(() {
                                       if (state is
-                                      RegistrationResendOtpSignUpErrorState) {
+                                      RegistrationResendOtpSignUpSuccessState) {
                                         FlutterToastr.show(
-                                          state.error,
+                                          'تم اعادة ارسال الكود',
                                           context,
                                           position: FlutterToastr.bottom,
-                                          backgroundColor: Colors.red,
+                                          backgroundColor: Colors.green,
                                           duration: FlutterToastr.lengthLong,
                                         );
+                                      } else {
+                                        if (state is
+                                        RegistrationResendOtpSignUpErrorState) {
+                                          FlutterToastr.show(
+                                            state.error,
+                                            context,
+                                            position: FlutterToastr.bottom,
+                                            backgroundColor: Colors.red,
+                                            duration: FlutterToastr.lengthLong,
+                                          );
+                                        }
                                       }
-                                    }
-                                  });
-                                },
-                                style: ButtonStyle(
-                                  overlayColor: MaterialStateProperty.all(
-                                    Colors.black12,
+                                    });
+                                  },
+                                  style: ButtonStyle(
+                                    overlayColor: MaterialStateProperty.all(
+                                      Colors.black12,
+                                    ),
                                   ),
-                                ),
-                                child: const Text(
-                                  'إعادة إرسال رمز التحقيق؟',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: Color(0xffFF7A00),
+                                  child: const Text(
+                                    'إعادة إرسال رمز التحقيق؟',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: Color(0xffFF7A00),
+                                    ),
                                   ),
                                 ),
                               ),
+                            fallback: (context)=>CircularProgressIndicator(),
                             ),
                             const SizedBox(
                               height: 130,

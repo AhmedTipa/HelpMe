@@ -9,7 +9,7 @@ class TechnicalBodyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider<TechnicalCubit>(
-        create: (BuildContext context) => TechnicalCubit()..technicalGetData(),
+        create: (BuildContext context) => TechnicalCubit(),
         child: BlocConsumer<TechnicalCubit, TechnicalStates>(
           listener: (BuildContext context, TechnicalStates state) {},
           builder: (BuildContext context, TechnicalStates state) {
@@ -22,27 +22,30 @@ class TechnicalBodyScreen extends StatelessWidget {
                 bottomNavigationBar: Directionality(
                   textDirection: TextDirection.ltr,
                   child: CircleNavBar(
-                    activeIcons: const <Widget>[
-                      Icon(
+                    activeIcons:  <Widget>[
+                      const Icon(
                         Icons.settings,
                         color: Colors.white,
                         size: 35,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.person,
                         color: Colors.white,
                         size: 35,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.add,
                         color: Colors.white,
                         size: 35,
                       ),
-                      Icon(
-                        Icons.home_filled,
-                        color: Colors.white,
-                        size: 35,
-                      ),
+                      // IconButton(
+                      //   onPressed: (){},
+                      //   icon: const Icon(
+                      //     Icons.home_filled,
+                      //     color: Colors.white,
+                      //     size: 35,
+                      //   ),
+                      // ),
                     ],
                     inactiveIcons: const <Widget>[
                       Text(
@@ -57,10 +60,10 @@ class TechnicalBodyScreen extends StatelessWidget {
                         'إضافة خدمة',
                         style: TextStyle(color: Colors.orange, fontSize: 12),
                       ),
-                      Text(
-                        'الصفحة الرئيسية',
-                        style: TextStyle(color: Colors.orange, fontSize: 12),
-                      ),
+                      // Text(
+                      //   'الصفحة الرئيسية',
+                      //   style: TextStyle(color: Colors.orange, fontSize: 12),
+                      // ),
                     ],
                     padding: const EdgeInsets.all(10),
                     color: const Color(0xffFAFAFA),

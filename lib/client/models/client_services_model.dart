@@ -96,7 +96,7 @@ class UserData {
   int? age;
   String? number;
   String? role;
-  List<Null>? imgPath;
+  List<void>? imgPath;
 
   UserData(
       {this.sId,

@@ -1,10 +1,10 @@
-class TechnicalModel {
+class TechnicalCompleteModel {
   bool? status;
   Technical? technical;
 
-  TechnicalModel({this.status, this.technical});
+  TechnicalCompleteModel({this.status, this.technical});
 
-  TechnicalModel.fromJson(Map<String, dynamic> json) {
+  TechnicalCompleteModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     technical = json['Technical'] != null
         ? Technical.fromJson(json['Technical'])

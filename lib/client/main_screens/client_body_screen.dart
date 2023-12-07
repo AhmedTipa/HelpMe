@@ -8,7 +8,7 @@ class ClientBodyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider<ClientCubit>(
-        create: (BuildContext context) => ClientCubit()..clientGetData(),
+        create: (BuildContext context) => ClientCubit(),
         child: BlocConsumer<ClientCubit, ClientStates>(
           listener: (BuildContext context, ClientStates state) {},
           builder: (BuildContext context, ClientStates state) {
@@ -30,8 +30,8 @@ class ClientBodyScreen extends StatelessWidget {
                       label: 'الصفحة الرئيسية',
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite_border),
-                      label: 'المفضلة',
+                      icon: Icon(Icons.format_align_left_rounded),
+                      label: 'ابرز الخدمات',
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.person),

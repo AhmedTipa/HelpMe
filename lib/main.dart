@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Directionality(
-            textDirection: TextDirection.ltr, child: startWidget!),
+            textDirection: TextDirection.ltr, child: OnBoardingScreen()),
         theme: ThemeData(
           scaffoldBackgroundColor: Color(backgroundColor),
           appBarTheme: AppBarTheme(

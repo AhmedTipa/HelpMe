@@ -12,6 +12,7 @@ Widget sectionClass({
   required String namePerson,
   required String nameCity,
   required String rate,
+
   required Function() filterOnPress,
 
 }) =>

@@ -49,3 +49,13 @@ class TechnicalGetCompleteDataErrorState extends TechnicalStates {
 
   TechnicalGetCompleteDataErrorState(this.error);
 }
+
+class TechnicalGetServicesDataLoadingState extends TechnicalStates {}
+
+class TechnicalGetServicesDataSuccessState extends TechnicalStates {}
+
+class TechnicalGetServicesDataErrorState extends TechnicalStates {
+  final String error;
+
+  TechnicalGetServicesDataErrorState(this.error);
+}
